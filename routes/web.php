@@ -23,3 +23,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('questions', 'QuestionsController');                // CRUD pour les questions
 
+Route::get('/users/{user}', 'UsersController@show')->name('users.show');

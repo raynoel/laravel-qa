@@ -38,8 +38,10 @@ class User extends Authenticatable
     ];
 
     public function questions() {
-        return $this->hasMany(Question::class);                     // Un usagé peut avoir plusieurs questions
+        return $this->hasMany(\App\Question::class);                // Un usagé peut avoir plusieurs questions
     }
 
-
+    public function getUrlAttribute() {                             // Retourne la variable $question->url
+        return route('users.show', $this->id);
+    }
 }

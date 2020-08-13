@@ -9,7 +9,7 @@ class QuestionsController extends Controller
 {
     /*** Affiche toutes les questions */
     public function index() {
-        $questions = Question::latest()->paginate(5);
+        $questions = Question::with('user')->latest()->paginate(5);  # lazy-load la table 'User'. Prévient de faire 50 queries sur la table 'User'
         return view('questions.index', compact('questions'));
     }
 
