@@ -46,15 +46,11 @@ class QuestionsController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
+
+    /* Formulaire pour modifier une question */
+    public function edit(Question $question) {
+        $user = Auth::user();
+        return view('questions.edit', compact('question', 'user'));
     }
 
     /**
@@ -66,7 +62,13 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $data = request()->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'user_id' => 'required'
+        ]);
+        $question->update($data);
+        return redirect()->route('questions.index')->with('success', 'Your question has been updated');
     }
 
     /**
