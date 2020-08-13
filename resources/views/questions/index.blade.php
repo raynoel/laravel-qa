@@ -4,8 +4,11 @@
 <div class="container">
   <!-- Affiche le message dans $_SESSION['success'] -->
   @if (session()->has('success'))
-  <div class="alert alert-success" role="alert">
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>Success</strong> {{ session()->get('success') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   @endif
 
@@ -21,6 +24,7 @@
             </div>
           </div>
         </div>
+        <!-- carte avec une question -->
         <div class="card-body">
           @foreach ($questions as $question)
             <div class="media">
@@ -36,10 +40,16 @@
                   {{ $question->views }} {{ Str::plural('view', $question->views) }}
                 </div>
               </div>
-
+              
               <div class="media-body">
-                <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3><!-- on défini url dans le model -->
-                <!-- Autheur -->
+                <div class="d-flex align-items-center">
+                  <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3><!-- url n'est pas une variable de $question... elle sera défini dans le model -->
+                  <!-- bouton edit -->
+                  <div class="ml-auto">
+                    <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                  </div>
+                </div>
+                <!-- Auteur -->
                 <p class="lead">Asked by 
                     <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
                     <small class="text-muted">{{ $question->created_date }}</small><!-- On défini created_at dans le model -->
