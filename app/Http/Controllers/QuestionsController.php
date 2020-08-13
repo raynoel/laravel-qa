@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionsController extends Controller
 {
@@ -19,7 +20,8 @@ class QuestionsController extends Controller
     public function create()
     {
         $question = new Question();
-        return view('questions.create', compact('question'));
+        $user = Auth::user();
+        return view('questions.create', compact('question', 'user'));
     }
 
 
@@ -27,11 +29,14 @@ class QuestionsController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'title' => 'required',
-            'body' => 'required'
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'user_id' => 'required'
         ]);
+ 
         Question::create($data);
-        return back();
+
+        return redirect()->route('questions.index')->with('success', 'Your question has been submitted');
     }
 
 

@@ -16,7 +16,7 @@ class Question extends Model
 
     public function setTitleAttribute($value) {
         $this->attributes['title'] = $value;
-        $this->attributes['slug'] = str_slug($value);               // Converti le titre en slug
+        $this->attributes['slug'] = \Str::slug($value . time());    // Converti le titre en slug
     }
 
     public function getUrlAttribute() {                             // Retourne la variable $question->url

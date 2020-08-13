@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container">
+  <!-- Affiche le message dans $_SESSION['success'] -->
+  @if (session()->has('success'))
+  <div class="alert alert-success" role="alert">
+    <strong>Success</strong> {{ session()->get('success') }}
+  </div>
+  @endif
+
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
