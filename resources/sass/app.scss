@@ -7,6 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+
+
+
 .counters {
   margin-right: 30px;
   font-size: 10px;
@@ -41,4 +44,8 @@ strong {
 
 .view {
   margin-top: 10px;
+}
+
+.form-delete {
+  display: inline;
 }

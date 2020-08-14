@@ -53,13 +53,8 @@ class QuestionsController extends Controller
         return view('questions.edit', compact('question', 'user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
+
+    /* Valide les params et modifie une question dans la DB */
     public function update(Request $request, Question $question)
     {
         $data = request()->validate([
@@ -71,14 +66,10 @@ class QuestionsController extends Controller
         return redirect()->route('questions.index')->with('success', 'Your question has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Question $question)
-    {
-        //
+
+    /* Supprime une question */
+    public function destroy(Question $question) {
+        $question->delete();
+        return redirect('questions')->with('success', 'Your question has been deleted');
     }
 }
