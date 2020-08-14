@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('questions', 'QuestionsController');                // CRUD pour les questions
+Route::resource('questions', 'QuestionsController')->except('show');                // CRUD pour les questions
+Route::get('questions/{slug}', 'QuestionsController@show')->name('questions.show');
+
 
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');

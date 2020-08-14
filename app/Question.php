@@ -14,13 +14,14 @@ class Question extends Model
         return $this->belongsTo(\App\User::class);                  // Une question appartient à 1 usagé
     }
 
-    public function setTitleAttribute($value) {
+    public function setTitleAttribute($value) {                     // Déclenché lorsqu'on essaie d'enregistrer le champ 'titre'
         $this->attributes['title'] = $value;
-        $this->attributes['slug'] = \Str::slug($value . time());    // Converti le titre en slug
+        $this->attributes['slug'] = \Str::slug($value . time());    // Converti le titre en slug unique
     }
 
+
     public function getUrlAttribute() {                             // Retourne la variable $question->url
-        return route('questions.show', $this->id);
+        return route('questions.show', $this->slug);
     }
 
     public function getCreatedDateAttribute() {                     // Retourne la variable $question->created_date
@@ -36,4 +37,7 @@ class Question extends Model
         }
         return "unanswered";
     }
+
+
+
 }

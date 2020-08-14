@@ -5,7 +5,7 @@
   <!-- Affiche le message dans $_SESSION['success'] -->
   @if (session()->has('success'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Success</strong> {{ session()->get('success') }}
+    <b class="mr-3">Success</b> {{ session()->get('success') }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -47,6 +47,12 @@
                   <!-- bouton edit -->
                   <div class="ml-auto">
                     <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                    <!-- bouton delete -->
+                    <form action="{{ route('questions.destroy', $question->id) }}" class="form-delete" method="post">
+                      @csrf
+                      @method('DELETE')
+                      <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
                   </div>
                 </div>
                 <!-- Auteur -->

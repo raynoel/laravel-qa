@@ -26,14 +26,12 @@ class QuestionsController extends Controller
 
 
     /* Valide et enregistre 1 nouvelle question */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $data = request()->validate([
             'title' => 'required|max:255',
             'body' => 'required',
             'user_id' => 'required'
         ]);
- 
         Question::create($data);
 
         return redirect()->route('questions.index')->with('success', 'Your question has been submitted');
@@ -41,9 +39,10 @@ class QuestionsController extends Controller
 
 
     /* Affiche 1 question */
-    public function show(Question $question)
-    {
-        //
+    public function show(Question $question) {
+        // dd($question->body);
+        $question->increment('views');                                  // Incrémente le compteur de visionnement
+        return view('questions.show', compact('question'));
     }
 
 
@@ -53,13 +52,8 @@ class QuestionsController extends Controller
         return view('questions.edit', compact('question', 'user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
+
+    /* Modifie une question */
     public function update(Request $request, Question $question)
     {
         $data = request()->validate([
@@ -71,14 +65,10 @@ class QuestionsController extends Controller
         return redirect()->route('questions.index')->with('success', 'Your question has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Question $question)
-    {
-        //
+
+    /* Supprime une question */
+    public function destroy(Question $question) {
+        $question->delete();
+        return redirect('questions')->with('success', 'Your question has been deleted');
     }
 }
