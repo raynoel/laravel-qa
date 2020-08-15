@@ -44,16 +44,26 @@
               <div class="media-body">
                 <div class="d-flex align-items-center">
                   <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3><!-- url n'est pas une variable de $question... elle sera défini dans le model -->
-                  <!-- bouton edit -->
+                  <!-- boutons edit & delete -->
+                  @if (Auth::user())                                   <!-- visible seulement pour les usagés logés -->
                   <div class="ml-auto">
-                    <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                
+                    <!-- bouton edit -->
+                    @if (Auth::user()->can('update', $question))      <!-- visible ssi la restriction de QuestionPolicy est remplie -->
+                      <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                    @endif
+                
                     <!-- bouton delete -->
-                    <form action="{{ route('questions.destroy', $question->id) }}" class="form-delete" method="post">
-                      @csrf
-                      @method('DELETE')
-                      <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form>
+                    @can ('update', $question)                        <!-- visible ssi la restriction de QuestionPolicy est remplie -->
+                      <form action="{{ route('questions.destroy', $question->id) }}" class="form-delete" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                      </form>
+                    @endcan
+                
                   </div>
+                  @endif
                 </div>
                 <!-- Auteur -->
                 <p class="lead">Asked by 
