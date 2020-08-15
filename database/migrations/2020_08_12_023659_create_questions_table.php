@@ -19,13 +19,12 @@ class CreateQuestionsTable extends Migration
             $table->string('slug')->unique();                                   // Retourne une erreur si le slug existe
             $table->text('body');
             $table->unsignedInteger('views')->default(0);
-            $table->unsignedInteger('answers')->default(0);
+            $table->unsignedInteger('answers_count')->default(0);
             $table->integer('votes')->default(0);                               // nb = positif - négatif
             $table->unsignedInteger('best_answer_id')->nullable();              // Réponse sélectionné par l'auteur de la question
             $table->unsignedInteger('user_id');
-            $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

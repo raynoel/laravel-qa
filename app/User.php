@@ -37,11 +37,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     public function questions() {
         return $this->hasMany(\App\Question::class);                // Un usagé peut avoir plusieurs questions
     }
 
-    public function getUrlAttribute() {                             // Retourne la variable $question->url
+
+    public function answers() {                                     
+        return $this->hasMany(\App\Answer::class);                  // Un usagé peut avoir plusieurs réponses
+    }
+
+    
+    public function getUrlAttribute() {                             // Retourne la variable $user->url
         return route('users.show', $this->id);
+    }
+
+
+
+    public function getAvatarAttribute() {                          // Retourne $user->avatar
+        $email = $this->email;        
+        $size = 32;
+        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
     }
 }

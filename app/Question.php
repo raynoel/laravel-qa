@@ -14,6 +14,10 @@ class Question extends Model
         return $this->belongsTo(\App\User::class);                  // Une question appartient à 1 usagé
     }
 
+    public function answers() {
+        return $this->hasMany(Answer::class);                       // Une question possède plusieurs réponses
+    }
+
     public function setTitleAttribute($value) {                     // Déclenché lorsqu'on essaie d'enregistrer le champ 'titre'
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = \Str::slug($value . time());    // Converti le titre en slug unique
@@ -29,7 +33,7 @@ class Question extends Model
     }
 
     public function getStatusAttribute() {                          // Retourne la variable $question->status
-        if ($this->answers > 0) {
+        if ($this->answers_count > 0) {
             if ($this->best_answer_id) {
                 return "answered-accepted";
             }
@@ -38,6 +42,8 @@ class Question extends Model
         return "unanswered";
     }
 
-
+    public function getBodyHtmlAttribute()  {
+        return \Parsedown::instance()->text($this->body);          // Retourne le texte converti en HTML 
+    }
 
 }

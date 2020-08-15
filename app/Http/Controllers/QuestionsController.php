@@ -10,7 +10,7 @@ class QuestionsController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('auth')->except('index', 'show');                 // index() et show() n'ont pas besoin que l'usagé soit loggé
+        $this->middleware('auth')->except('index', 'show');                     // index() et show() n'ont pas besoin que l'usagé soit loggé
     }
 
 
@@ -47,7 +47,7 @@ class QuestionsController extends Controller
     /* Affiche 1 question */
     public function show(Question $question) {
         // dd($question->body);
-        $question->increment('views');                                  // Incrémente le compteur de visionnement
+        $question->increment('views');                                        // Incrémente le compteur de visionnement
         return view('questions.show', compact('question'));
     }
 
