@@ -2,7 +2,7 @@
 
 <div class="form-group">
   <label for="question-title">Question Title</label>
-  <input type="text" name="title" id="question-title" class="form-control" value="{{ old('title') ?? $question->title}}">
+  <input type="text" name="title" id="question-title" class="form-control" value="{{ old('title', $question->title) }}">
   <p class="text-danger">{{ $errors->first('title') }}</p>
 </div>
 

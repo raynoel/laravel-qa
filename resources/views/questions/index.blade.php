@@ -2,15 +2,8 @@
 
 @section('content')
 <div class="container">
-  <!-- Affiche le message dans $_SESSION['success'] -->
-  @if (session()->has('success'))
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <b class="mr-3">Success</b> {{ session()->get('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
+
+  @include ('layouts._messages')                                <!-- Affiche le message contenus dans $_SESSION['success'] -->
 
   <div class="row justify-content-center">
     <div class="col-md-12">

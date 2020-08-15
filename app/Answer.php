@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-    
+    protected $guarded = [];                                        // Permet le mass assignement. Ok si Controller::store() valide les champs
+
     public function question() {
         return $this->belongsTo(Question::class);                   // Une réponse appartient à une question
     }
