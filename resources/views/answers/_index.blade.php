@@ -17,7 +17,7 @@
               <a title="This answer is useful" class="vote-up"><i class="fas fa-caret-up fa-3x"></i></a>
               <span class="votes-count">1230</span>
               <a title="This answer is not useful" class="vote-down off"><i class="fas fa-caret-down fa-3x"></i></a>
-              <a title="Mark this answer as best answer" class="vote-accepted mt-2"><i class="fas fa-check fa-2x"></i></a>
+              <a title="Mark this answer as best answer" class="{{ $answer->status }} mt-2"><i class="fas fa-check fa-2x"></i></a>
             </div>
             <div class="media-body">
               <!-- la réponse -->
@@ -32,7 +32,7 @@
                     @endcan
                     <!-- bouton delete -->
                     @can ('delete', $answer)
-                      <form class="form-delete" method="post" action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}">
+                      <form class="form-delete" method="post" action="{{ route('questions.answers.destroy', [ $question->id, $answer->id ]) }}">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
@@ -41,7 +41,8 @@
                   </div>
                 </div>
 
-                <div class="col-4"></div>
+                <div class="col-4">à vernir
+                </div>
 
                 <!-- avatar + username -->
                 <div class="col-4">

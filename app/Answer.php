@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
+  
   protected $guarded = [];                                        // Permet le mass assignement. Ok si Controller::store() valide les champs
 
   public function question() {
@@ -27,21 +28,22 @@ class Answer extends Model
       return $this->created_at->diffForHumans();                    // Converti 'created_at' en 'create_date' 
   }
 
+  
+  public function getStatusAttribute() {                            // si c'est la 'best answer' $answer->status retourne 'vote-acceted', qui affiche un crochet vert à coté de la réponse
+    return $this->id === $this->question->best_answer_id ? 'vote-accepted' : '';
+  }
 
 
-  public static function boot() {                                   // Fonction exécutée lorsqu'on ajoute une rangée dans le tableau Answer
+  public static function boot() {                                   // Fonction exécutée lorsqu'on ajoute une rangée dans le tableau Answer 
     parent::boot();
 
     static::created(function ($answer) {
-      $answer->question->increment('answers_count');                // Augmente le champ Question['answer_count'] de la question relative à la réponse
-    });
+        $answer->question->increment('answers_count');              // Augmente le champ 'answer_count' de la table question
+    });        
 
-    static::destroy(function ($answer) {
-      $answer->question->decrement('answers_count');                // Décroit le champ Question['answer_count'] de la question relative à la réponse
-      if ($answer->question->best_answer_id === $answer->id) {      // Efface la valeur de Question['best_answer_id']
-        $answer->question->best_answer_id = NULL;
-        $answer->question->save();
-      }
+    static::deleted(function ($answer) {            
+        $answer->question->decrement('answers_count');              // Décroit le champ 'answer_count' de la table question
     });
   }
+
 }
