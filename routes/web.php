@@ -18,4 +18,6 @@ Route::resource('questions.answers', 'AnswersController')->only(['store', 'edit'
 // Route::get('/questions/{question}/answers/{answer}/edit', 'AnswersController@edit')->name('answers.edit');
 // Route::delete('/questions/{question}/answers/{answer}', 'AnswersController@destroy')->name('answers.stodestroyre');
 
+Route::post('/answers/{answer}/accept', 'AcceptAnswerController')->name('answers.accept'); // Appel un single action controller
+
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');            // Affiches les infos d'un usagé

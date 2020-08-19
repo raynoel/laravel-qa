@@ -24,15 +24,15 @@ class Question extends Model
     }
 
 
-    public function getUrlAttribute() {                             // Retourne la variable $question->url
+    public function getUrlAttribute() {                             // Retourne la variable '$question->url'
         return route('questions.show', $this->slug);
     }
 
-    public function getCreatedDateAttribute() {                     // Retourne la variable $question->created_date
+    public function getCreatedDateAttribute() {                     // Retourne la variable '$question->created_date'
         return $this->created_at->diffForHumans();
     }
 
-    public function getStatusAttribute() {                          // Retourne la variable $question->status
+    public function getStatusAttribute() {                          // Retourne la variable '$question->status'
         if ($this->answers_count > 0) {
             if ($this->best_answer_id) {
                 return "answered-accepted";
@@ -43,7 +43,16 @@ class Question extends Model
     }
 
     public function getBodyHtmlAttribute()  {
-        return \Parsedown::instance()->text($this->body);          // Retourne le texte converti en HTML 
+        return \Parsedown::instance()->text($this->body);          // Retourne le texte converti en HTML dans '$question->body_html'
     }
+
+    public function acceptBestAnswer(Answer $answer) {
+        $this->best_answer_id = $answer->id;
+        $this->save();
+
+    }
+
+
+
 
 }

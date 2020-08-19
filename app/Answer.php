@@ -29,8 +29,13 @@ class Answer extends Model
   }
 
   
-  public function getStatusAttribute() {                            // si c'est la 'best answer' $answer->status retourne 'vote-acceted', qui affiche un crochet vert à coté de la réponse
+  public function getStatusAttribute() {                            // $answer->status retourne 'vote-acceted' si cette réponse est la meilleur réponse, qui affiche un crochet vert à coté de la réponse
     return $this->id === $this->question->best_answer_id ? 'vote-accepted' : '';
+  }
+
+
+  public function getIsBestAttribute() {                            // '$answer->is_best' retourne Vrai si cette réponse est la meilleur réponse
+    return $this->id === $this->question->best_answer_id;
   }
 
 
